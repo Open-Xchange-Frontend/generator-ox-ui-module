@@ -10,7 +10,15 @@
 
 module.exports = function (grunt) {
 
-    grunt.config('clean', ['build/', 'node_modules/grunt-newer/.cache', 'tmp/', 'dist/']);
+    grunt.config('checkDependencies', {
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
+        this: {
+            options: {
+                npmInstall: true
+            }
+        }
+
+    });
+
+    grunt.loadNpmTasks('grunt-check-dependencies');
 };
