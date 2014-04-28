@@ -26,7 +26,7 @@ Yeoman travels light. He didn't pack any generators when he moved in. You can th
 To install generator-ox-ui-module from npm, run:
 
 ```
-$ npm install -g generator-ox-ui-module
+$ npm install -g Open-Xchange-Frontend/generator-ox-ui-module
 ```
 
 Finally, initiate the generator:
