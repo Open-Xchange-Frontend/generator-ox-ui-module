@@ -17,10 +17,29 @@ module.exports = function (grunt) {
                     ]
                 }]
             }
+        },
+        watch: {
+            grunt: {
+                options: {
+                    reload: true
+                },
+                files: ['Gruntfile.js'],
+                tasks: ['default']
+            },
+            all: {
+                files: [
+                    'lib/*.*',
+                    'app/**/*.*',
+                    'deb-pkg/**/*.*',
+                    'rpm-pkg/**/*.*'
+                ],
+                tasks: ['default']
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['jshint']);
 };
