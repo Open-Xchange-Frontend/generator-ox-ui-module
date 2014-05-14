@@ -1,10 +1,9 @@
 'use strict';
 var util = require('util');
 var fs = require('fs');
-var path = require('path');
 var yeoman = require('yeoman-generator');
 
-var DebpkgGenerator = module.exports = function DebpkgGenerator(args, options, config) {
+var DebpkgGenerator = module.exports = function DebpkgGenerator(args, options) {
     yeoman.generators.Base.apply(this, arguments);
 
     this.generateStatic = options.static;
@@ -31,7 +30,7 @@ DebpkgGenerator.prototype.askFor = function askFor() {
     // have Yeoman greet the user.
     console.log(this.yeoman);
 
-    var prompts = []
+    var prompts = [];
 
     if (!this.maintainerName || !this.email) {
         prompts.push({
@@ -75,7 +74,7 @@ DebpkgGenerator.prototype.askFor = function askFor() {
         this.copyright = this.copyright || props.copyright;
         this.licenseName = this.licenseName || props.licenseName;
         this.license = ''; // TODO: add license text here!
-        this.static_frontend_package = this.generateStatic || props.generateStatic;
+        this.staticFrontendPackage = this.generateStatic || props.generateStatic;
 
         cb();
     }.bind(this));

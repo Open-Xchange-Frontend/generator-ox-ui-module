@@ -3,7 +3,7 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 
-var OxUiModuleGenerator = module.exports = function OxUiModuleGenerator(args, options, config) {
+var OxUiModuleGenerator = module.exports = function OxUiModuleGenerator(args, options) {
   yeoman.generators.Base.apply(this, arguments);
 
   this.on('end', function () {
