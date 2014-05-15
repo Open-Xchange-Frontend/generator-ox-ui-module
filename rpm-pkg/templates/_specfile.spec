@@ -33,8 +33,9 @@ Requires:       httpd
 <% if (staticFrontendPackage) { %>
 %package static
 Group:          Applications/Productivity
+Summary:	Static files for <%= packageName %>
 
-%description
+%description static
 <%= description %>
 
 This package contains static files to be installed on the web-server
@@ -56,8 +57,8 @@ node -e "require('grunt').cli()" "" install:dist --prefix %{buildroot}/opt/open-
 find "%{buildroot}$APPSUITE" -type d | sed -e 's,%{buildroot},%dir ,' > %{name}.files
 find "%{buildroot}$APPSUITE" \( -type f -o -type l \) | sed -e 's,%{buildroot},,' >> %{name}.files
 <% if (staticFrontendPackage) { %>
-find "%{buildroot}%{docroot}" -type d | sed -e 's,%{buildroot},%dir ,' > %{name}-static.files
-find "%{buildroot}%{docroot}" \( -type f -o -type l \) | sed -e 's,%{buildroot},,' >> %{name}-static.files
+find "%{buildroot}%{docroot}/appsuite" -type d | sed -e 's,%{buildroot},%dir ,' > %{name}-static.files
+find "%{buildroot}%{docroot}/appsuite" \( -type f -o -type l \) | sed -e 's,%{buildroot},,' >> %{name}-static.files
 <% } %>
 %clean
 %{__rm} -rf %{buildroot}
@@ -67,4 +68,5 @@ find "%{buildroot}%{docroot}" \( -type f -o -type l \) | sed -e 's,%{buildroot},
 %dir /opt/open-xchange
 <% if (staticFrontendPackage) { %>
 %files static -f %{name}-static.files
+%defattr(-,root,root)
 <% } %>
