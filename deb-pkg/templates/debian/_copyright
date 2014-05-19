@@ -4,5 +4,4 @@ Upstream-Contact: <%= maintainer %>
 
 Files: *
 Copyright: <%= copyright %>
-License: <%= licenseName %>
-<%= license %>
+License: <%= license %>

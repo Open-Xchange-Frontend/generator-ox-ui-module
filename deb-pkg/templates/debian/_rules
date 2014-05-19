@@ -8,31 +8,22 @@ ifneq (,$(or $(filter noopt,$(DEB_BUILD_OPTIONS)),\
 	FLAGS += debug=1
 endif
 
-BACKEND := debian/<%= _.slugify(packageName) %>/opt/open-xchange/appsuite
-<% if (static_frontend_package) { %>
-FRONTEND := debian/<%= _.slugify(packageName) %>-static/var/www/appsuite
+BACKEND := debian/<%= _.slugify(packageName) %>/opt/open-xchange
+<% if (staticFrontendPackage) { %>
+FRONTEND := debian/<%= _.slugify(packageName) %>-static/var/www
 <% } %>
 
+override_dh_auto_build:
+	node -e "require('grunt').cli()" "" dist --no-color
+
 override_dh_auto_install:
-	mkdir -p $(BACKEND)
-	cp -r apps $(BACKEND)
-	cp -r manifests $(BACKEND)
-	for i in i18n/*/**/*.*; do \
-		j=$${i#i18n/}; pkgname=$${j%/.*}; \
-		mkdir -p debian/$$pkgname/opt/open-xchange/etc/languages/appsuite/; \
-		cp $$i debian/$$pkgname/opt/open-xchange/etc/languages/appsuite/; \
-	done
-<% if (static_frontend_package) { %>
-	for i in $$(find $(BACKEND) -type f                                \
-		    ! -regex '.*\.\(js\|css\|less\|json\)' -printf '%P '); \
-	do                                                                 \
-		mkdir -p "$(FRONTEND)/$$(dirname $$i)";                    \
-		cp "$(BACKEND)/$$i" "$(FRONTEND)/$$i";                     \
-	done
+	node -e "require('grunt').cli()" "" install:dynamic --prefix $(BACKEND) --no-color
+<% if (staticFrontendPackage) { %>
+	node -e "require('grunt').cli()" "" install:static --htdoc $(FRONTEND) --no-color
 <% } %>
 
 override_dh_auto_clean:
-	rm -rf $(FRONTEND) $(BACKEND) debian/<%= _.slugify(packageName) %>-l10n-*/opt/open-xchange/appsuite
+	rm -rf $(FRONTEND) $(BACKEND)
 
 %:
 	dh $@

@@ -2,4 +2,4 @@
 
   * Initial Release.
 
- -- <%= maintainer %>  <%= (new Date()).toString() %>
+ -- <%= maintainer %>  <%= (new Date()).toGMTString().replace('GMT', '+0000') %>
