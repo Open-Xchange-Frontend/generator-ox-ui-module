@@ -12,7 +12,8 @@ Packager:       <%= maintainer %>
 License:        <%= license %>
 Summary:        <%= summary %>
 Source:         %{name}_%{version}.orig.tar.gz
-Source1:        dependencies.tar.gz
+Source1:         %{name}_%{version}.orig-bower_components.tar.gz
+Source2:         %{name}_%{version}.orig-node_modules.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-root
 
 %if 0%{?suse_version}
@@ -45,6 +46,7 @@ This package contains static files to be installed on the web-server
 
 %setup -q
 %setup -q -D -a 1
+%setup -q -D -a 2
 
 %build
 
@@ -66,6 +68,7 @@ find "%{buildroot}%{docroot}/appsuite" \( -type f -o -type l \) | sed -e 's,%{bu
 %files -f %{name}.files
 %defattr(-,root,root)
 %dir /opt/open-xchange
+%exclude %{docroot}/*
 <% if (staticFrontendPackage) { %>
 %files static -f %{name}-static.files
 %defattr(-,root,root)
