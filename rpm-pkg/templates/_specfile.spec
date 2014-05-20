@@ -12,8 +12,6 @@ Packager:       <%= maintainer %>
 License:        <%= license %>
 Summary:        <%= summary %>
 Source:         %{name}_%{version}.orig.tar.gz
-Source1:         %{name}_%{version}.orig-bower_components.tar.gz
-Source2:         %{name}_%{version}.orig-node_modules.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-root
 
 %if 0%{?suse_version}
@@ -45,8 +43,6 @@ This package contains static files to be installed on the web-server
 %prep
 
 %setup -q
-%setup -q -D -a 1
-%setup -q -D -a 2
 
 %build
 
