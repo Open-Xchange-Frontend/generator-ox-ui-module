@@ -23,10 +23,10 @@ $ npm install -g yo
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
-To install generator-ox-ui-module from npm, run:
+This generator provides a starting point for developing UI modules for the Open-Xchange Appsuite ecosystem. To install generator-ox-ui-module from npm, run:
 
 ```
-$ npm install -g Open-Xchange-Frontend/generator-ox-ui-module
+$ npm install -g generator-ox-ui-module
 ```
 
 Finally, initiate the generator:
