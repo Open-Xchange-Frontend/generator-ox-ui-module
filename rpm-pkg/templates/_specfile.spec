@@ -4,7 +4,9 @@ BuildRequires:  nodejs >= 0.10.0
 Requires:	open-xchange-appsuite
 Version:        <%= version %>
 %define         ox_release 1
-Release:        %{ox_release}_<CI_CNT>.<B_CNT>
+Release:        1
+# use next line to run on a OBS instance
+#Release:        %{ox_release}_<CI_CNT>.<B_CNT>
 Group:          Applications/Productivity
 Vendor:         Open-Xchange
 URL:            http://open-xchange.com
