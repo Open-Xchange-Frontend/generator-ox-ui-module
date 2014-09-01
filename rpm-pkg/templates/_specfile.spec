@@ -14,6 +14,8 @@ Packager:       <%= maintainer %>
 License:        <%= license %>
 Summary:        <%= summary %>
 Source:         %{name}_%{version}.orig.tar.gz
+# use the next line to run build with bz2 compressed sources
+#Source:         %{name}_%{version}.orig.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-root
 
 %if 0%{?suse_version}
