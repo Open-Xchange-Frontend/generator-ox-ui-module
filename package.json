@@ -1,6 +1,6 @@
 {
   "name": "generator-ox-ui-module",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "An ox ui module generator for Yeoman",
   "keywords": [
     "yeoman-generator"
