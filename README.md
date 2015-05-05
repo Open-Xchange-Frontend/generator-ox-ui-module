@@ -75,7 +75,7 @@ containing all files needed to build .deb packages.
 If you like to maintain packaging information separated from the actual sources of your module, you can run
 
 ```
-$ yo ox-ui-module:deb-pkg /path/to/package.json
+$ yo ox-ui-module:deb-pkg --package /path/to/package.json
 ```
 
 and point Yeoman to a package.json file of an UI module.
@@ -88,7 +88,7 @@ all information needed to build .rpm packages.
 If you like to maintain packaging information separated from the actual sources of your module, you can run
 
 ```
-$ yo ox-ui-module:rpm-pkg /path/to/package.json
+$ yo ox-ui-module:rpm-pkg --package /path/to/package.json
 ```
 
 and point Yeoman to a package.json file of an UI module.
