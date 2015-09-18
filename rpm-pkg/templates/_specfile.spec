@@ -65,6 +65,21 @@ find "%{buildroot}%{docroot}/appsuite" \( -type f -o -type l \) | sed -e 's,%{bu
 %clean
 %{__rm} -rf %{buildroot}
 
+%define update /opt/open-xchange/appsuite/share/update-themes.sh
+
+%post
+if [ $1 -eq 1 -a -x %{update} ]; then %{update} --later; fi
+
+%postun
+if [ -x %{update} ]; then %{update} --later; fi
+
+<% if (staticFrontendPackage) { %>
+%define touch /opt/open-xchange/sbin/touch-appsuite
+
+%post static
+if [ -x %{touch} ]; then %{touch}; fi
+
+<% } %>
 %files -f %{name}.files
 %defattr(-,root,root)
 %dir /opt/open-xchange
