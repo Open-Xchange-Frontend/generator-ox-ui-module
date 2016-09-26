@@ -63,5 +63,5 @@ OxUiModuleGenerator.prototype.app = function app() {
 };
 
 OxUiModuleGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('jshintrc', '.jshintrc');
+  this.copy('eslintrc', '.eslintrc');
 };
