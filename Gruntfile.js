@@ -9,10 +9,7 @@ module.exports = function (grunt) {
                 push: false
             }
         },
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc'
-            },
+        eslint: {
             all: {
                 files: [{
                     src: [
@@ -46,9 +43,9 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-bump');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-eslint');
 
-    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('default', ['eslint']);
 };
 
