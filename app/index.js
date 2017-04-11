@@ -54,10 +54,16 @@ OxUiModuleGenerator.prototype.app = function app() {
     this.mkdir('apps');
     this.mkdir('grunt');
     this.mkdir('grunt/tasks');
+    this.mkdir('spec');
 
     this.template('_package.json', 'package.json');
     this.template('_bower.json', 'bower.json');
     this.template('_Gruntfile.js', 'Gruntfile.js');
+
+    this.template('_karma.conf.js', 'karma.conf.js');
+    this.copy('spec/main-test.js', 'spec/main-test.js');
+    this.copy('spec/basic_spec.js', 'spec/basic_spec.js');
+    this.copy('spec/eslintrc', 'spec/.eslintrc');
 
     this.copy('gitignore', '.gitignore');
 };
