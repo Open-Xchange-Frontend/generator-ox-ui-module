@@ -55,7 +55,7 @@ node -e "require('grunt').cli()" "" dist --no-color
 %install
 export NO_BRP_CHECK_BYTECODE_VERSION=true
 APPSUITE=/opt/open-xchange/appsuite/
-node -e "require('grunt').cli()" "" install:dist --prefix %{buildroot}/opt/open-xchange --htdoc %{buildroot}%{docroot} --no-color
+node -e "require('grunt').cli()" "" install:dist --prefix=%{buildroot}/opt/open-xchange --htdoc=%{buildroot}%{docroot} --no-color
 find "%{buildroot}$APPSUITE" -type d | sed -e 's,%{buildroot},%dir ,' > %{name}.files
 find "%{buildroot}$APPSUITE" \( -type f -o -type l \) | sed -e 's,%{buildroot},,' >> %{name}.files
 <% if (staticFrontendPackage) { %>
