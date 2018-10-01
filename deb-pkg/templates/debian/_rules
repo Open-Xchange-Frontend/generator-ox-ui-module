@@ -17,9 +17,9 @@ override_dh_auto_build:
 	node -e "require('grunt').cli()" "" dist --no-color
 
 override_dh_auto_install:
-	node -e "require('grunt').cli()" "" install:dynamic --prefix $(BACKEND) --no-color
+	node -e "require('grunt').cli()" "" install:dynamic --prefix=$(BACKEND) --no-color
 <% if (staticFrontendPackage) { %>
-	node -e "require('grunt').cli()" "" install:static --htdoc $(FRONTEND) --no-color
+	node -e "require('grunt').cli()" "" install:static --htdoc=$(FRONTEND) --no-color
 <% } %>
 
 override_dh_auto_clean:
