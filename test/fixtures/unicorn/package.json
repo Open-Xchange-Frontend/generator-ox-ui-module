@@ -1,0 +1,9 @@
+{
+  "name": "unicorn",
+  "version": "0.0.0",
+  "author": {
+      "name": "Jan Doe",
+      "email": "jan.doe@example.com"
+  },
+  "license": "MIT"
+}

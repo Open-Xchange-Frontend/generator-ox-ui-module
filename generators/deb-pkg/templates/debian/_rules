@@ -8,9 +8,9 @@ ifneq (,$(or $(filter noopt,$(DEB_BUILD_OPTIONS)),\
 	FLAGS += debug=1
 endif
 
-BACKEND := debian/<%= _.slugify(packageName) %>/opt/open-xchange
+BACKEND := debian/<%= slugify(packageName) %>/opt/open-xchange
 <% if (staticFrontendPackage) { %>
-FRONTEND := debian/<%= _.slugify(packageName) %>-static/var/www
+FRONTEND := debian/<%= slugify(packageName) %>-static/var/www
 <% } %>
 
 override_dh_auto_build:

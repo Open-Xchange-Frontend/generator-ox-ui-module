@@ -1,16 +1,16 @@
-Source: <%= _.slugify(packageName) %>
+Source: <%= slugify(packageName) %>
 Section: non-free/web
 Priority: optional
 Maintainer: <%= maintainer %>
 Build-Depends: debhelper (>= 8.0.0), nodejs (>= 0.10)
 Standards-Version: 3.9.2
 
-Package: <%= _.slugify(packageName) %>
+Package: <%= slugify(packageName) %>
 Architecture: all
 Depends: ${misc:Depends}, open-xchange-appsuite-manifest
 Description: <%= description %>
 <% if  (staticFrontendPackage) { %>
-Package: <%= _.slugify(packageName) %>-static
+Package: <%= slugify(packageName) %>-static
 Architecture: all
 Depends: ${misc:Depends}, open-xchange-appsuite
 Description: <%= description %>

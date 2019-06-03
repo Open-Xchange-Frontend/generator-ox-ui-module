@@ -1,4 +1,4 @@
-<%= _.slugify(packageName) %> (<%= version %>-1) unstable; urgency=low
+<%= slugify(packageName) %> (<%= version %>-1) unstable; urgency=low
 
   * Initial Release.
 

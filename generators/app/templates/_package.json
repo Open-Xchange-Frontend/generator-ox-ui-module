@@ -1,5 +1,5 @@
 {
-  "name": "<%= _.slugify(moduleName) %>",
+  "name": "<%= slugify(moduleName) %>",
   "version": "0.0.0",
   "scripts": {
     "test": "grunt build copy:specs karma:continuous"

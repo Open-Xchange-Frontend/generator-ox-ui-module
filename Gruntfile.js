@@ -15,9 +15,7 @@ module.exports = function (grunt) {
                     src: [
                         'Gruntfile.js',
                         'lib/*.js',
-                        'app/**/*.js',
-                        'deb-pkg/**/*.js',
-                        'rpm-pkg/**/*.js'
+                        'generators/**/*.js'
                     ]
                 }]
             }

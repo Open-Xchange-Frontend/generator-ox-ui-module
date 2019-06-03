@@ -1,37 +1,63 @@
-/*global describe, beforeEach, it*/
+/*global describe, before, it*/
 'use strict';
 
 var path    = require('path');
-var helpers = require('yeoman-generator').test;
+var assert  = require('yeoman-assert');
+var helpers = require('yeoman-test');
 
 
 describe('ox-ui-module generator', function () {
-    beforeEach(function (done) {
-        helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
-            if (err) {
-                return done(err);
-            }
-
-            this.app = helpers.createGenerator('ox-ui-module:app', [
-                '../../app'
-            ]);
-            done();
-        }.bind(this));
+    before(function () {
+        return helpers
+            .run(path.join(__dirname, '../generators/app'))
+            .withOptions({ 'skip-install': true });
     });
 
-    it('creates expected files', function (done) {
+    it('creates expected files', function () {
         var expected = [
             // add files you expect to exist here.
-            '.eslintrc'
+            '.eslintrc',
+            'package.json',
+            'Gruntfile.js'
         ];
 
-        helpers.mockPrompt(this.app, {
-            'someOption': true
+        assert.file(expected);
+    });
+});
+
+describe('ox-ui-module packaging generators', function () {
+    describe('for deb packages', function () {
+        before(function () {
+            return helpers
+                .run(path.join(__dirname, '../generators/deb-pkg'))
+                .withOptions({
+                    package: path.join(__dirname, 'fixtures/unicorn/package.json')
+                });
         });
-        this.app.options['skip-install'] = true;
-        this.app.run({}, function () {
-            helpers.assertFiles(expected);
-            done();
+
+        it('creates expected files', function () {
+            var expected = [
+                'debian/control'
+            ];
+
+            assert.file(expected);
+        });
+    });
+
+    describe('for rpm packages', function () {
+        before(function () {
+            return helpers
+                .run(path.join(__dirname, '../generators/rpm-pkg'))
+                .withOptions({
+                    package: path.join(__dirname, 'fixtures/unicorn/package.json')
+                });
+        });
+        it('creates expected files', function () {
+            var expected = [
+                'unicorn.spec'
+            ];
+
+            assert.file(expected);
         });
     });
 });
