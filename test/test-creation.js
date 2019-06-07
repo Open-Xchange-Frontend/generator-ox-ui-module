@@ -37,10 +37,15 @@ describe('ox-ui-module packaging generators', function () {
 
         it('creates expected files', function () {
             var expected = [
-                'debian/control'
+                'debian/control',
+                'debian/changelog'
             ];
 
             assert.file(expected);
+        });
+
+        it('extracts and user version number correctly', () => {
+            assert.fileContent('debian/changelog', /unicorn \(1\.3\.3-7[^)]*\)/);
         });
     });
 
@@ -58,6 +63,10 @@ describe('ox-ui-module packaging generators', function () {
             ];
 
             assert.file(expected);
+        });
+
+        it('extracts and user version number correctly', () => {
+            assert.fileContent('unicorn.spec', /Version:\s+ 1\.3\.3-7/);
         });
     });
 });
