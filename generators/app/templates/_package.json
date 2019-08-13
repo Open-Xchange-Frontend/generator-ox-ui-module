@@ -25,14 +25,8 @@
     "underscore": "^1.8.0"
   },
   "devDependencies": {
-    "@open-xchange/codecept-helper": "0.2.0",
     "appserver": "^0.6.0",
-    "chai": "^4.0.2",
-    "codeceptjs": "^2.0.0",
-    "eslint-plugin-codeceptjs": "^0.2.0",
     "grunt-contrib-connect": "^0.9.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "selenium-standalone": "^6.15.1",
-    "webdriverio": "^5.2.2"
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
