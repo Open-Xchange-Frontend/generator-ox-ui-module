@@ -1,8 +1,8 @@
 {
   "name": "<%= slugify(moduleName) %>",
-  "license": "<%= slugify(license) %>",
-  "version": "<%= slugify(version) %>",
-  "description": "<%= slugify(description) %>",
+  "license": "<%= license %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
   "scripts": {
     "msgmerge": "for i in i18n/*.po; do msgmerge -Us --previous --backup=none \"$i\" i18n/ox.pot; done"
   },
