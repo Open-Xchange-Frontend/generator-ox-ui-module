@@ -14,7 +14,7 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
     writing() {
         const moduleName = this.appname,
               license = this.pkg.license || '',
-              description = this.pkg.description || '',
+              description = (this.pkg.description || '').trim().replace(/\n/g, '\\n'),
               version = this.pkg.version || '';
         // Copy template to temporary file 
         this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json.temp'), { slugify, moduleName, license, version, description });

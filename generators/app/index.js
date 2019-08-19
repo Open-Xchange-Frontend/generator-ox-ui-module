@@ -50,7 +50,9 @@ module.exports = class OxUiModuleGenerator extends Generator {
 
     writing () {
         if (this.fs.exists('package.json')) return;
-        const { moduleName, license, version, description } = this.answers;
+        const { moduleName, license, version } = this.answers;
+        let { description } = this.answers;
+        description = description.trim().replace(/\n/g, '\\n');
         this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), { slugify, moduleName, license, version, description });
         this.fs.copyTpl(this.templatePath('_bower.json'), this.destinationPath('bower.json'), { slugify, moduleName });
         this.fs.copyTpl(this.templatePath('_Gruntfile.js'), this.destinationPath('Gruntfile.js'));
