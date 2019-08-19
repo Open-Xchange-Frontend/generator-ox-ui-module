@@ -10,26 +10,48 @@ module.exports = class OxUiModuleGenerator extends Generator {
     }
 
     async prompting() {
+        if (this.fs.exists('package.json')) return;
         this.answers = await this.prompt([{
             name: 'moduleName',
             message: 'What do you want the name of your package to be?',
-            default: this.appname
+            default: this.appname,
+            store: true
+        }, {
+            type: 'editor',
+            name: 'description',
+            message: 'Please enter a little description for your package',
+            store: true
+        }, {
+            type: 'list',
+            name: 'version',
+            message: 'Which OX App Suite version is this package for?',
+            choices: ['7.10.2', '7.10.1'],
+            store: true
+        }, {
+            type: 'list',
+            name: 'license',
+            message: 'Under what license is this project released?',
+            choices: ['CC-BY-NC-SA-3.0', 'MIT'],
+            store: true
         }, {
             type: 'confirm',
             name: 'translations',
             message: 'Do you want to include translations into your package?',
-            default: true
+            default: true,
+            store: true
         }, {
             type: 'confirm',
             name: 'e2eTests',
             message: 'Do you want to include e2e tests into your package?',
-            default: true
+            default: true,
+            store: true
         }]);
     }
 
     writing () {
-        const { moduleName } = this.answers;
-        this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), { slugify, moduleName });
+        if (this.fs.exists('package.json')) return;
+        const { moduleName, license, version, description } = this.answers;
+        this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), { slugify, moduleName, license, version, description });
         this.fs.copyTpl(this.templatePath('_bower.json'), this.destinationPath('bower.json'), { slugify, moduleName });
         this.fs.copyTpl(this.templatePath('_Gruntfile.js'), this.destinationPath('Gruntfile.js'));
         this.fs.copy(this.templatePath('eslintrc'), this.destinationPath('.eslintrc'));
@@ -52,11 +74,13 @@ module.exports = class OxUiModuleGenerator extends Generator {
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
     }
     install() {
+        if (this.fs.exists('package.json')) return;
         return this.installDependencies();
     }
-    end (){
+    end() {
+        this.config.set('sourceRoot', this.sourceRoot());
         // Install selenium standalone
-        if (this.answers.e2eTests === true) this.spawnCommand('npx', ['selenium-standalone', 'install']);
+        if (this.config.get('e2eTests') === true) this.spawnCommand('npx', ['selenium-standalone', 'install']);
         return;
     }
 };
