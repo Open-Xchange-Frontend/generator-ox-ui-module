@@ -7,6 +7,7 @@ module.exports = class OxUiModuleGenerator extends Generator {
 
     initializing() {
         this.pkg = this.fs.readJSON(this.destinationPath('package.json'));
+        this.config.set('sourceRoot', this.sourceRoot());
     }
 
     async prompting() {
@@ -76,13 +77,18 @@ module.exports = class OxUiModuleGenerator extends Generator {
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
     }
     install() {
-        if (this.fs.exists('package.json')) return;
+        if (this.fs.exists('package-lock.json')) return;
         return this.installDependencies();
     }
     end() {
-        this.config.set('sourceRoot', this.sourceRoot());
+        let installSelenium = false;
+        if (this.fs.readJSON(this.destinationPath('package.json')).devDependencies.hasOwnProperty('codeceptjs')) {
+            installSelenium = true;
+        } else if (this.answers) {
+            installSelenium = this.answers.e2eTests;
+        }
         // Install selenium standalone
-        if (this.config.get('e2eTests') === true) this.spawnCommand('npx', ['selenium-standalone', 'install']);
+        if (installSelenium === true) this.spawnCommand('npx', ['selenium-standalone', 'install']);
         return;
     }
 };

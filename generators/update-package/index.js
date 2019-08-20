@@ -7,8 +7,6 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
         this.pkg = this.fs.readJSON(this.destinationPath('package.json'));
         // Run OxUiModuleGenerator to get some necessary info from it like source root
         this.composeWith('ox-ui-module', { skipInstall: true });
-        // Use source root of OxUiModuleGenerator
-        this.sourceRoot(this.config.get('sourceRoot'));
     }
 
     writing() {
@@ -16,6 +14,9 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
               license = this.pkg.license || '',
               description = (this.pkg.description || '').trim().replace(/\n/g, '\\n'),
               version = this.pkg.version || '';
+        // Use source root of OxUiModuleGenerator
+        this.sourceRoot(this.config.get('sourceRoot'));
+
         // Copy template to temporary file 
         this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json.temp'), { slugify, moduleName, license, version, description });
 
