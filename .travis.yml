@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - '0.8'
-  - '0.10'
+  - 'node'
+  - 'lts/*'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-ox-ui-module' ]; then cd .. && eval "mv $currentfolder generator-ox-ui-module" && cd generator-ox-ui-module; fi

@@ -1,0 +1,7 @@
+image: node:lts-alpine
+
+run tests:
+  stage: test
+  script:
+    - npm i --silent --no-progress
+    - npm test
