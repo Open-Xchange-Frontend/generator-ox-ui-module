@@ -81,6 +81,7 @@ module.exports = class OxUiModuleGenerator extends Generator {
         return this.installDependencies();
     }
     end() {
+        if (this.options['skip-install']) return;
         let installSelenium = false;
         if (this.fs.readJSON(this.destinationPath('package.json')).devDependencies.hasOwnProperty('codeceptjs')) {
             installSelenium = true;
@@ -88,7 +89,12 @@ module.exports = class OxUiModuleGenerator extends Generator {
             installSelenium = this.answers.e2eTests;
         }
         // Install selenium standalone
-        if (installSelenium === true) this.spawnCommand('npx', ['selenium-standalone', 'install']);
+        if (installSelenium === true) return new Promise((resolve, reject) => {
+            const proc = this.spawnCommand('npx', ['selenium-standalone', 'install']);
+            proc
+                .on('exit', resolve)
+                .on('error', reject);
+        });
         return;
     }
 };
