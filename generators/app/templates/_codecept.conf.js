@@ -24,7 +24,7 @@ module.exports.config = {
             'desiredCapabilities': {
                 'browserName': 'chrome',
                 'chromeOptions': {
-                    'args': ["--disable-gpu","--window-size=1920,1080"],
+                    'args': ['--disable-gpu','--window-size=1920,1080'],
                     'prefs': {
                         'intl.accept_languages': 'en-US'
                     }

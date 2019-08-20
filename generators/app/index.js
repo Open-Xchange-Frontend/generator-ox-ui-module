@@ -60,11 +60,11 @@ module.exports = class OxUiModuleGenerator extends Generator {
         this.fs.copy(this.templatePath('eslintrc'), this.destinationPath('.eslintrc'));
         // Add apps folder
         mkdirp.sync('./apps');
-        // Create ox.pot in i18n 
+        // Create ox.pot in i18n
         if (this.answers.translations === true) {
             this.fs.copy(this.templatePath('i18n/ox.pot'), this.destinationPath('i18n/ox.pot'));
         }
-        // Create scaffolding for e2e 
+        // Create scaffolding for e2e
         if (this.answers.e2eTests === true) {
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });

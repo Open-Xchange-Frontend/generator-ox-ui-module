@@ -11,13 +11,13 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
 
     writing() {
         const moduleName = this.appname,
-              license = this.pkg.license || '',
-              description = (this.pkg.description || '').trim().replace(/\n/g, '\\n'),
-              version = this.pkg.version || '';
+            license = this.pkg.license || '',
+            description = (this.pkg.description || '').trim().replace(/\n/g, '\\n'),
+            version = this.pkg.version || '';
         // Use source root of OxUiModuleGenerator
         this.sourceRoot(this.config.get('sourceRoot'));
 
-        // Copy template to temporary file 
+        // Copy template to temporary file
         this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json.temp'), { slugify, moduleName, license, version, description });
 
         const packageJSON = this.fs.readJSON(this.destinationPath('package.json.temp'));
