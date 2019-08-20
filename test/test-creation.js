@@ -10,6 +10,9 @@ describe('ox-ui-module generator', function () {
     before(function () {
         return helpers
             .run(path.join(__dirname, '../generators/app'))
+            .withPrompts({
+                description: 'No fax given'
+            })
             .withOptions({ 'skip-install': true });
     });
 
