@@ -72,6 +72,7 @@ module.exports = class OxUiModuleGenerator extends Generator {
             this.fs.copy(this.templatePath('e2e/actor.js'), this.destinationPath('e2e/actor.js'));
             this.fs.copy(this.templatePath('e2e/helper.js'), this.destinationPath('e2e/helper.js'));
             this.fs.copy(this.templatePath('e2e/users.js'), this.destinationPath('e2e/users.js'));
+            this.fs.extendJSON(this.destinationPath('package.json'), { scripts: { e2e: "codeceptjs run" } });
         }
 
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
