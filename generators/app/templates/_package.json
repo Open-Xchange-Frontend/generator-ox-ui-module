@@ -1,5 +1,6 @@
 {
   "name": "<%= slugify(moduleName) %>",
+  "maintainer": "<%= maintainer %>",
   "license": "<%= license %>",
   "version": "<%= version %>",
   "description": "<%= description %>",

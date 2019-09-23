@@ -1,0 +1,6 @@
+FROM gitlab.open-xchange.com:4567/frontend/core:<%= version %>
+
+MAINTAINER <%- maintainer %>
+
+COPY build /app/build/
+COPY dist /app/dist/

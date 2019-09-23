@@ -45,6 +45,9 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });
             this.fs.copyTpl(this.templatePath('_codecept.conf.js'), this.destinationPath('codecept.conf.js'), { slugify, moduleName });
+            this.fs.copyTpl(this.templatePath('_Dockerfile'), this.destinationPath('Dockerfile'), { slugify, moduleName, version, maintainer });
+            // Copy necessary scaffolding files
+            this.fs.copy(this.templatePath('dockerignore'), this.destinationPath('.dockerignore'));
             this.fs.copy(this.templatePath('e2e/actor.js'), this.destinationPath('e2e/actor.js'));
             this.fs.copy(this.templatePath('e2e/helper.js'), this.destinationPath('e2e/helper.js'));
             this.fs.copy(this.templatePath('e2e/users.js'), this.destinationPath('e2e/users.js'));
