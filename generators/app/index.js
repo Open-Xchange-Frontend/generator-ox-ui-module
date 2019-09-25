@@ -51,9 +51,9 @@ module.exports = class OxUiModuleGenerator extends Generator {
 
     writing () {
         if (this.fs.exists('package.json')) return;
-        const { moduleName, license, version } = this.answers,
+        const { moduleName, license } = this.answers,
             maintainer = this.user.git.name() + ' \<' + this.user.git.email() + '\>';
-        let { description } = this.answers;
+        let { description, version } = this.answers;
         // Trim description to avoid line brakes
         description = description.trim().replace(/\n/g, '\\n');
         // Create files from templates and scaffolding
@@ -70,12 +70,15 @@ module.exports = class OxUiModuleGenerator extends Generator {
         }
         // Create scaffolding for e2e
         if (this.answers.e2eTests === true) {
+            let croppedVersion = version.replace(/\./g, '');
+            console.log('test2', croppedVersion, version);
             // Create e2e and output folder 
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });
             // Create files from templates
             this.fs.copyTpl(this.templatePath('_codecept.conf.js'), this.destinationPath('codecept.conf.js'), { slugify, moduleName });
             this.fs.copyTpl(this.templatePath('_Dockerfile'), this.destinationPath('Dockerfile'), { slugify, moduleName, version, maintainer });
+            this.fs.copyTpl(this.templatePath('_gitlab-ci.yml'), this.destinationPath('../.gitlab-ci.yml'), { slugify, moduleName, croppedVersion });
             // Copy necessary scaffolding files
             this.fs.copy(this.templatePath('dockerignore'), this.destinationPath('.dockerignore'));
             this.fs.copy(this.templatePath('e2e/actor.js'), this.destinationPath('e2e/actor.js'));
