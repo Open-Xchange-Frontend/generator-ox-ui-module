@@ -42,10 +42,12 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
 
         // Check if package.json contains codecept as devDependency and uptade all e2e dependencies
         if (this.fs.readJSON(this.destinationPath('package.json')).devDependencies.hasOwnProperty('codeceptjs') || e2eTests == true) {
+            let croppedVersion = version.replace(/\./g, '');
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });
             this.fs.copyTpl(this.templatePath('_codecept.conf.js'), this.destinationPath('codecept.conf.js'), { slugify, moduleName });
             this.fs.copyTpl(this.templatePath('_Dockerfile'), this.destinationPath('Dockerfile'), { slugify, moduleName, version, maintainer });
+            this.fs.copyTpl(this.templatePath('_gitlab-ci.yml'), this.destinationPath('../.gitlab-ci.yml'), { slugify, moduleName, croppedVersion });
             // Copy necessary scaffolding files
             this.fs.copy(this.templatePath('dockerignore'), this.destinationPath('.dockerignore'));
             this.fs.copy(this.templatePath('e2e/actor.js'), this.destinationPath('e2e/actor.js'));

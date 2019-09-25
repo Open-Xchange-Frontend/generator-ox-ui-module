@@ -71,7 +71,6 @@ module.exports = class OxUiModuleGenerator extends Generator {
         // Create scaffolding for e2e
         if (this.answers.e2eTests === true) {
             let croppedVersion = version.replace(/\./g, '');
-            console.log('test2', croppedVersion, version);
             // Create e2e and output folder 
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });
