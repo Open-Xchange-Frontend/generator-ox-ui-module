@@ -26,13 +26,16 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
         const moduleName = this.appname,
             license = this.pkg.license || '',
             description = (this.pkg.description || '').trim().replace(/\n/g, '\\n'),
+            maintainer = this.user.git.name() + ' \<' + this.user.git.email() + '\>',
             version = this.pkg.version || '',
-            { e2eTests } = this.config.get('promptValues');;
+            { e2eTests } = this.config.get('promptValues');
+
+        console.log(this.user, maintainer);
         // Use source root of OxUiModuleGenerator
         this.sourceRoot(this.config.get('sourceRoot'));
 
         // Copy template to temporary file
-        this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json.temp'), { slugify, moduleName, license, version, description });
+        this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json.temp'), { slugify, moduleName, license, version, description, maintainer });
 
         const packageJSON = this.fs.readJSON(this.destinationPath('package.json.temp'));
         this.log('Updating your package information');
