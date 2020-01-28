@@ -26,7 +26,7 @@ module.exports = class OxUiModuleGenerator extends Generator {
             type: 'list',
             name: 'version',
             message: 'Which OX App Suite version is this package for?',
-            choices: ['7.10.2', '7.10.1'],
+            choices: ['7.10.3', '7.10.2', '7.10.1'],
             store: true
         }, {
             type: 'list',
