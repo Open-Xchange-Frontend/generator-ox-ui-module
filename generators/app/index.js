@@ -52,8 +52,9 @@ module.exports = class OxUiModuleGenerator extends Generator {
     writing () {
         if (this.fs.exists('package.json')) return;
         const { moduleName, license } = this.answers,
-            maintainer = this.user.git.name() + ' \<' + this.user.git.email() + '\>';
+            maintainer = this.user.git.name() + ' <' + this.user.git.email() + '>';
         let { description, version } = this.answers;
+        version = version || '';
         // Trim description to avoid line brakes
         description = description.trim().replace(/\n/g, '\\n');
         // Create files from templates and scaffolding
@@ -71,7 +72,7 @@ module.exports = class OxUiModuleGenerator extends Generator {
         // Create scaffolding for e2e
         if (this.answers.e2eTests === true) {
             let croppedVersion = version.replace(/\./g, '');
-            // Create e2e and output folder 
+            // Create e2e and output folder
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });
             // Create files from templates
@@ -84,7 +85,7 @@ module.exports = class OxUiModuleGenerator extends Generator {
             this.fs.copy(this.templatePath('e2e/helper.js'), this.destinationPath('e2e/helper.js'));
             this.fs.copy(this.templatePath('e2e/users.js'), this.destinationPath('e2e/users.js'));
             // Add e2e script to package.json
-            this.fs.extendJSON(this.destinationPath('package.json'), { scripts: { e2e: "codeceptjs run" } });
+            this.fs.extendJSON(this.destinationPath('package.json'), { scripts: { e2e: 'codeceptjs run' } });
         }
     }
     install() {

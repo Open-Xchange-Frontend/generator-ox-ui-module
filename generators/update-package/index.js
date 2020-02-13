@@ -26,7 +26,7 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
         const moduleName = this.appname,
             license = this.pkg.license || '',
             description = (this.pkg.description || '').trim().replace(/\n/g, '\\n'),
-            maintainer = this.user.git.name() + ' \<' + this.user.git.email() + '\>',
+            maintainer = this.user.git.name() + ' <' + this.user.git.email() + '>',
             version = this.pkg.version || '',
             { e2eTests } = this.config.get('promptValues');
 
@@ -56,7 +56,7 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
             this.fs.copy(this.templatePath('e2e/actor.js'), this.destinationPath('e2e/actor.js'));
             this.fs.copy(this.templatePath('e2e/helper.js'), this.destinationPath('e2e/helper.js'));
             this.fs.copy(this.templatePath('e2e/users.js'), this.destinationPath('e2e/users.js'));
-            this.fs.extendJSON(this.destinationPath('package.json'), { scripts: { e2e: "codeceptjs run" } });
+            this.fs.extendJSON(this.destinationPath('package.json'), { scripts: { e2e: 'codeceptjs run' } });
         }
         // Delete some files
         this.fs.delete(this.destinationPath('package.json.temp'));
@@ -80,5 +80,5 @@ module.exports = class OxUiModuleUpdateGenerator extends Generator {
                 .on('error', reject);
         });
         return;
-    } 
+    }
 };
