@@ -51,13 +51,17 @@ module.exports = class OxUiModuleGenerator extends Generator {
 
     writing () {
         if (this.fs.exists('package.json')) return;
-        const { moduleName, license, version } = this.answers;
-        let { description } = this.answers;
+        const { moduleName, license } = this.answers,
+            maintainer = this.user.git.name() + ' \<' + this.user.git.email() + '\>';
+        let { description, version } = this.answers;
+        // Trim description to avoid line brakes
         description = description.trim().replace(/\n/g, '\\n');
-        this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), { slugify, moduleName, license, version, description });
+        // Create files from templates and scaffolding
+        this.fs.copyTpl(this.templatePath('_package.json'), this.destinationPath('package.json'), { slugify, moduleName, license, version, description, maintainer });
         this.fs.copyTpl(this.templatePath('_bower.json'), this.destinationPath('bower.json'), { slugify, moduleName });
         this.fs.copyTpl(this.templatePath('_Gruntfile.js'), this.destinationPath('Gruntfile.js'));
         this.fs.copy(this.templatePath('eslintrc'), this.destinationPath('.eslintrc'));
+        this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
         // Add apps folder
         mkdirp.sync('./apps');
         // Create ox.pot in i18n
@@ -66,22 +70,31 @@ module.exports = class OxUiModuleGenerator extends Generator {
         }
         // Create scaffolding for e2e
         if (this.answers.e2eTests === true) {
+            let croppedVersion = version.replace(/\./g, '');
+            // Create e2e and output folder 
             mkdirp.sync('./e2e/output');
             this.npmInstall(['@open-xchange/codecept-helper', 'chai', 'codeceptjs', 'eslint-plugin-codeceptjs', 'selenium-standalone', 'webdriverio'], { 'save-dev': true });
+            // Create files from templates
             this.fs.copyTpl(this.templatePath('_codecept.conf.js'), this.destinationPath('codecept.conf.js'), { slugify, moduleName });
+            this.fs.copyTpl(this.templatePath('_Dockerfile'), this.destinationPath('Dockerfile'), { slugify, moduleName, version, maintainer });
+            this.fs.copyTpl(this.templatePath('_gitlab-ci.yml'), this.destinationPath('../.gitlab-ci.yml'), { slugify, moduleName, croppedVersion });
+            // Copy necessary scaffolding files
+            this.fs.copy(this.templatePath('dockerignore'), this.destinationPath('.dockerignore'));
             this.fs.copy(this.templatePath('e2e/actor.js'), this.destinationPath('e2e/actor.js'));
             this.fs.copy(this.templatePath('e2e/helper.js'), this.destinationPath('e2e/helper.js'));
             this.fs.copy(this.templatePath('e2e/users.js'), this.destinationPath('e2e/users.js'));
+            // Add e2e script to package.json
+            this.fs.extendJSON(this.destinationPath('package.json'), { scripts: { e2e: "codeceptjs run" } });
         }
-
-        this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
     }
     install() {
         if (this.fs.exists('package-lock.json')) return;
         return this.installDependencies();
     }
     end() {
+        // Skip if updating package
         if (this.options['skip-install']) return;
+        // Check in selenium has to be installed
         let installSelenium = false;
         if (this.fs.readJSON(this.destinationPath('package.json')).devDependencies.hasOwnProperty('codeceptjs')) {
             installSelenium = true;

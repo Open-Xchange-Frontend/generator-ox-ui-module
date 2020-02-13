@@ -1,0 +1,9 @@
+image: docker:latest
+
+variables:
+    UI_PROJECT_PATH: <%= moduleName %>
+
+include:
+    - project: 'engineering-services/gitlab-ci-templates'
+      ref: 'master'
+      file: 'gitlab-ci-template-<%= croppedVersion %>.yml'
